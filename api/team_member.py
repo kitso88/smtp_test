@@ -2,6 +2,7 @@ import random
 
 import requests
 from allure import step
+from pytest_schema import schema
 
 from api.conf.config import BASE_URL, GET_MEMBER, GET_MEMBERS
 
@@ -30,3 +31,20 @@ class TeamMemberMethods:
         res = requests.get(BASE_URL+GET_MEMBER+"/"+self.get_member_random_id())
         member = res.json()
         return member['data']
+
+    @step
+    def member_schema_validation(self):
+        member_schema = {
+            "position": str,
+            "level": str,
+            "first_name": str,
+            "last_name": str,
+            "day_birth": int,
+            "hr_department": str,
+            "email": str,
+            "mobile": int,
+            "probation_period": int,
+            "ID": str
+        }
+        member_data = self.get_team_member_data()
+        return schema(member_schema) == member_data

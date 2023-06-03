@@ -1,5 +1,4 @@
 import pytest
-
 from api.team_member import TeamMemberMethods
 
 
@@ -16,4 +15,4 @@ class TestMembers:
         assert api.get_team_member_content_type() == 'application/json; charset=UTF-8'
 
     def test_members_type(self, api):
-        assert isinstance(api.get_team_member_data(), dict)
+        assert(api.member_schema_validation())
